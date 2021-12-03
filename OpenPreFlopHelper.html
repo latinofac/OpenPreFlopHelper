@@ -1,0 +1,652 @@
+<html>
+<head>
+<style>
+td{text-align: center;padding:50}
+button{width:500px;height:50px;background-color:red;color:yellow}
+@media only screen and (max-width: 768px) {
+td{text-align: center;padding:30}
+}
+</style>
+</head>
+<body onLoad="setRandomCard()" style="background-image: url('https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/TableBig.png');background-repeat: no-repeat;background-size:contain;">
+<table style="width: 100%;">
+<tr>
+<td>
+<img id="utg1" src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/redCard.jpg" width="50"/>
+<img id="utg2" src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/redCard.jpg" width="50"/>
+</td>
+<td style="padding-top: 0;">
+<img id="utgplusone1" src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/redCard.jpg" width="50"/>
+<img id="utgplusone2" src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/redCard.jpg" width="50"/>
+</td>
+<td>
+<img id="mp1" src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/redCard.jpg" width="50"/>
+<img id="mp2" src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/redCard.jpg" width="50"/>
+</td>
+</tr>
+<tr>
+<td style="text-align: left">
+<img id="bigblind1" src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/redCard.jpg" width="50"/>
+<img id="bigblind2" src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/redCard.jpg" width="50"/>
+</td>
+<td>
+</td>
+<td style="text-align: right;padding-right: 100;">
+<img id="hj1" src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/redCard.jpg" width="50"/>
+<img id="hj2" src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/redCard.jpg" width="50"/>
+</td>
+</tr>
+<tr>
+<td>
+<img id="smallblind1" src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/redCard.jpg" width="50"/>
+<img id="smallblind2" src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/redCard.jpg" width="50"/>
+</td>
+<td style="padding-bottom: 0;">
+<img id="button1" src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/redCard.jpg" width="50"/>
+<img id="button2" src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/redCard.jpg" width="50"/>
+</td>
+<td>
+<img id="co1" src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/redCard.jpg" width="50"/>
+<img id="co2" src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/redCard.jpg" width="50"/>
+</td>
+</tr>
+</table>
+<div style="text-align:center">
+<button onClick="fold()" type="button">FOLD</button>
+<button onClick="raise()" type="button">RAISE</button>
+<input type="hidden" id="position" value="8">
+<input type="hidden" id="cardone" value="redCard">
+<input type="hidden" id="cardtwo" value="redCard">
+</div>
+<div style="padding:10px">
+</div>
+<table style="width: 100%;">
+<tr>
+<td style="color:white;background-color:green;text-align:center;padding:0;width:30%">CORRECT RAISES</td>
+<td style="color:white;background-color:green;text-align:center;padding:0;width:20%"><label id="correctRaise">0</label></td>
+<td style="color:white;background-color:red;text-align:center;padding:0;width:30%">INCORRECT RAISES</td>
+<td style="color:white;background-color:red;text-align:center;padding:0;width:20%"><label id="incorrectRaise">0</label></td>
+</tr>
+<tr>
+<td style="color:white;background-color:green;text-align:center;padding:0;width:30%">CORRECT FOLDS</td>
+<td style="color:white;background-color:green;text-align:center;padding:0;width:20%"><label id="correctFold">0</label></td>
+<td style="color:white;background-color:red;text-align:center;padding:0;width:30%">INCORRECT FOLDS</td>
+<td style="color:white;background-color:red;text-align:center;padding:0;width:20%"><label id="incorrectFold">0</label></td>
+</tr>
+</table>
+<script type="text/javascript">
+function getRandomCard(){
+   var result           = '';
+   var characters       = 'A23456789TJQK';
+   var charactersLength = characters.length;
+   for ( var i = 0; i < 1; i++ ) {
+         result += characters.charAt(Math.floor(Math.random() *
+    charactersLength));
+      }
+   characters       = 'cshd';
+   charactersLength = characters.length;
+   for ( var i = 0; i < 1; i++ ) {
+            result += characters.charAt(Math.floor(Math.random() *
+       charactersLength));
+      }
+
+   return result;
+}
+
+function setCards(card1, card2, position){
+   document.getElementById("cardone").value = card1;
+   document.getElementById("cardtwo").value = card2;
+   if (position == "8"){
+      document.getElementById("button1").src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/" + card1 + ".jpg";
+      document.getElementById("button2").src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/" + card2 + ".jpg";
+      //document.getElementById("position").value = "1";
+      return;
+   }
+   if (position == "1"){
+      document.getElementById("smallblind1").src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/" + card1 + ".jpg";
+      document.getElementById("smallblind2").src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/" + card2 + ".jpg";
+      //document.getElementById("position").value = "3";
+      return;
+   }
+   if (position == "3"){
+      document.getElementById("utg1").src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/" + card1 + ".jpg";
+      document.getElementById("utg2").src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/" + card2 + ".jpg";
+      //document.getElementById("position").value = "4";
+      return;
+   }
+   if (position == "4"){
+      document.getElementById("utgplusone1").src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/" + card1 + ".jpg";
+      document.getElementById("utgplusone2").src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/" + card2 + ".jpg";
+      //document.getElementById("position").value = "5";
+      return;
+   }
+   if (position == "5"){
+      document.getElementById("mp1").src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/" + card1 + ".jpg";
+      document.getElementById("mp2").src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/" + card2 + ".jpg";
+      //document.getElementById("position").value = "6";
+      return;
+   }
+   if (position == "6"){
+      document.getElementById("hj1").src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/" + card1 + ".jpg";
+      document.getElementById("hj2").src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/" + card2 + ".jpg";
+      //document.getElementById("position").value = "7";
+      return;
+   }
+   if (position == "7"){
+      document.getElementById("co1").src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/" + card1 + ".jpg";
+      document.getElementById("co2").src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/" + card2 + ".jpg";
+      //document.getElementById("position").value = "8";
+      return;
+   }
+}
+
+function resetCards(){
+   document.getElementById("button1").src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/redCard.jpg";
+   document.getElementById("button2").src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/redCard.jpg";
+   document.getElementById("smallblind1").src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/redCard.jpg";
+   document.getElementById("smallblind2").src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/redCard.jpg";
+   document.getElementById("utg1").src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/redCard.jpg";
+   document.getElementById("utg2").src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/redCard.jpg";
+   document.getElementById("utgplusone1").src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/redCard.jpg";
+   document.getElementById("utgplusone2").src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/redCard.jpg";
+   document.getElementById("mp1").src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/redCard.jpg";
+   document.getElementById("mp2").src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/redCard.jpg";
+   document.getElementById("hj1").src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/redCard.jpg";
+   document.getElementById("hj2").src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/redCard.jpg";
+   document.getElementById("co1").src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/redCard.jpg";
+   document.getElementById("co2").src="https://raw.githubusercontent.com/latinofac/OpenTracker/master/OpenTracker/Images/redCard.jpg";
+}
+
+function setRandomCard() {
+  resetCards();
+  var randomCard1 = getRandomCard();
+  var randomCard2 = getRandomCard();
+  while (randomCard1 == randomCard2){
+     randomCard2 = getRandomCard();
+  }
+  setCards(randomCard1,randomCard2,document.getElementById("position").value);
+  //alert("OK");
+}
+
+function ChangePosition(){
+   var position = document.getElementById("position").value;
+   if (position == 8){
+      document.getElementById("position").value = "1";
+   } else if (position == 1){
+      document.getElementById("position").value = "3";
+   } else if (position == 3){
+      document.getElementById("position").value = "4";
+   } else if (position == 4){
+      document.getElementById("position").value = "5";
+   } else if (position == 5){
+      document.getElementById("position").value = "6";
+   } else if (position == 6){
+      document.getElementById("position").value = "7";
+   } else if (position == 7){
+      document.getElementById("position").value = "8";
+   }
+
+}
+
+function correct(action){
+   var actualScore = 0;
+   if (action == "raise"){
+      actualScore = document.getElementById('correctRaise').innerHTML;
+      document.getElementById('correctRaise').innerHTML = parseInt(actualScore) + 1;
+      return;
+   }
+   if (action == "fold"){
+      actualScore = document.getElementById('correctFold').innerHTML;
+      document.getElementById('correctFold').innerHTML = parseInt(actualScore) + 1;
+      return;
+   }
+}
+
+function incorrect(action){
+   alert("Incorrect!");
+   var actualScore = 0;
+   if (action == "raise"){
+      actualScore = document.getElementById('incorrectRaise').innerHTML;
+      document.getElementById('incorrectRaise').innerHTML = parseInt(actualScore) + 1;
+      return;
+   }
+   if (action == "fold"){
+      actualScore = document.getElementById('incorrectFold').innerHTML;
+      document.getElementById('incorrectFold').innerHTML = parseInt(actualScore) + 1;
+      return;
+   }
+}
+
+function checkAnswer(action){
+   var card1 = document.getElementById("cardone").value;
+   var card2 = document.getElementById("cardtwo").value;
+   var position = document.getElementById("position").value;
+
+   //PAIRS
+   if (card1.charAt(0) == card2.charAt(0)){
+      var pairsToRaise = "789TJQKA";
+      if (position == 1 || position == 8 || position == 7){
+         pairsToRaise = "23456789TJQKA";
+      } else if (position == 6){
+         pairsToRaise = "456789TJQKA";
+      } else if (position == 5){
+         pairsToRaise = "56789TJQKA";
+      }
+      if (action == "raise" && pairsToRaise.indexOf(card1.charAt(0)) > -1){
+         correct(action);
+         return;
+      } else if (action == "fold" && pairsToRaise.indexOf(card1.charAt(0)) == -1){
+         correct(action);
+         return;
+      }
+      else{
+         incorrect(action);
+         return;
+      }
+   }
+
+   //SUITEDS
+   if (card1.charAt(1) == card2.charAt(1)){
+      //ACES
+      if (card1.charAt(0) == "A" || card2.charAt(0) == "A"){
+         var acesToRaise = "5TJQK";
+         if (position == 4){
+            acesToRaise = "4589TJQK";
+         } else if (position != 3){
+            acesToRaise = "23456789TJQKA";
+         }
+         if (action == "raise" && acesToRaise.indexOf(card1.charAt(0)) > -1){
+		    correct(action);
+		    return;
+		 } else if (action == "raise" && acesToRaise.indexOf(card2.charAt(0)) > -1){
+		    correct(action);
+		    return;
+		 } else if (action == "fold" && acesToRaise.indexOf(card1.charAt(0)) == -1 && acesToRaise.indexOf(card2.charAt(0)) == -1){
+		    correct(action);
+		    return;
+		 } else{
+		    incorrect(action);
+		    return;
+         }
+      } else if (card1.charAt(0) == "K" || card2.charAt(0) == "K"){ //KINGS
+         var kingsToRaise = "TJQ";
+         if (position == 4 || position == 5){
+		    kingsToRaise = "9TJQ";
+		 } else if (position == 6){
+		    kingsToRaise = "89TJQ";
+         } else if (position == 7){
+		    kingsToRaise = "56789TJQ";
+         } else if (position == 8 || position == 1){
+		    kingsToRaise = "23456789TJQ";
+         }
+         if (action == "raise" && kingsToRaise.indexOf(card1.charAt(0)) > -1){
+		    correct(action);
+		    return;
+		 } else if (action == "raise" && kingsToRaise.indexOf(card2.charAt(0)) > -1){
+		    correct(action);
+		    return;
+		 } else if (action == "fold" && kingsToRaise.indexOf(card1.charAt(0)) == -1 && kingsToRaise.indexOf(card2.charAt(0)) == -1){
+		    correct(action);
+		    return;
+		 } else{
+		    incorrect(action);
+		    return;
+         }
+      } else if (card1.charAt(0) == "Q" || card2.charAt(0) == "Q"){ //QUEENS
+         var queensToRaise = "TJ";
+         if (position == 4 || position == 5 || position == 6){
+		    queensToRaise = "9TJ";
+		 } else if (position == 7){
+		    queensToRaise = "89TJ";
+		 } else if (position == 8){
+		    queensToRaise = "56789TJ";
+         } else if (position == 1){
+		    queensToRaise = "456789TJ";
+         }
+         if (action == "raise" && queensToRaise.indexOf(card1.charAt(0)) > -1){
+		 	correct(action);
+		    return;
+		 } else if (action == "raise" && queensToRaise.indexOf(card2.charAt(0)) > -1){
+		    correct(action);
+		    return;
+		 } else if (action == "fold" && queensToRaise.indexOf(card1.charAt(0)) == -1 && queensToRaise.indexOf(card2.charAt(0)) == -1){
+		    correct(action);
+		    return;
+		 } else{
+		    incorrect(action);
+		    return;
+         }
+      } else if (card1.charAt(0) == "J" || card2.charAt(0) == "J"){ //JACKS
+         var jacksToRaise = "9T";
+         if (position == 7){
+		    jacksToRaise = "89T";
+		 } else if (position == 8){
+		    jacksToRaise = "789T";
+		 } else if (position == 1){
+		    jacksToRaise = "6789T";
+		 }
+		 if (action == "raise" && jacksToRaise.indexOf(card1.charAt(0)) > -1){
+		    correct(action);
+		    return;
+		 } else if (action == "raise" && jacksToRaise.indexOf(card2.charAt(0)) > -1){
+		    correct(action);
+		    return;
+		 } else if (action == "fold" && jacksToRaise.indexOf(card1.charAt(0)) == -1 && jacksToRaise.indexOf(card2.charAt(0)) == -1){
+		    correct(action);
+		    return;
+		 } else{
+		    incorrect(action);
+		    return;
+         }
+      } else if (card1.charAt(0) == "T" || card2.charAt(0) == "T"){ //TENS
+         var tensToRaise = "9";
+         if (position == 5 || position == 6 || position == 7){
+	        tensToRaise = "89";
+		 } else if (position == 8 || position == 1){
+		    tensToRaise = "6789";
+		 }
+		 if (action == "raise" && tensToRaise.indexOf(card1.charAt(0)) > -1){
+		    correct(action);
+		    return;
+		 } else if (action == "raise" && tensToRaise.indexOf(card2.charAt(0)) > -1){
+		    correct(action);
+		    return;
+		 } else if (action == "fold" && tensToRaise.indexOf(card1.charAt(0)) == -1 && tensToRaise.indexOf(card2.charAt(0)) == -1){
+		    correct(action);
+		    return;
+		 } else{
+		    incorrect(action);
+		    return;
+         }
+      } else if (card1.charAt(0) == "9" || card2.charAt(0) == "9"){ //NINES
+         var ninesToRaise = "8";
+         if (position == 6 || position == 7){
+		    ninesToRaise = "78";
+		 } else if (position == 8){
+		    ninesToRaise = "678";
+		 } else if (position == 1){
+		    ninesToRaise = "5678";
+		 }
+		 if (action == "raise" && ninesToRaise.indexOf(card1.charAt(0)) > -1){
+		    correct(action);
+		    return;
+		 } else if (action == "raise" && ninesToRaise.indexOf(card2.charAt(0)) > -1){
+		    correct(action);
+		    return;
+		 } else if (action == "fold" && ninesToRaise.indexOf(card1.charAt(0)) == -1 && ninesToRaise.indexOf(card2.charAt(0)) == -1){
+		    correct(action);
+		    return;
+		 } else{
+		    incorrect(action);
+		    return;
+         }
+      } else if (card1.charAt(0) == "8" || card2.charAt(0) == "8"){ //EIGHTS
+         var eightsToRaise = " ";
+         if (position == 5 || position == 6){
+		    eightsToRaise = "7";
+		 } else if (position == 7){
+		    eightsToRaise = "67";
+		 } else if (position == 8){
+		    eightsToRaise = "567";
+		 } else if (position == 1){
+		    eightsToRaise = "4567";
+		 }
+		 if (action == "raise" && eightsToRaise.indexOf(card1.charAt(0)) > -1){
+		    correct(action);
+		    return;
+		 } else if (action == "raise" && eightsToRaise.indexOf(card2.charAt(0)) > -1){
+		    correct(action);
+		    return;
+		 } else if (action == "fold" && eightsToRaise.indexOf(card1.charAt(0)) == -1 && eightsToRaise.indexOf(card2.charAt(0)) == -1){
+		    correct(action);
+		    return;
+		 } else{
+		    incorrect(action);
+		    return;
+         }
+      } else if (card1.charAt(0) == "7" || card2.charAt(0) == "7"){ //SEVENS
+         var sevensToRaise = " ";
+         if (position == 5 || position == 6){
+		    sevensToRaise = "6";
+		 } else if (position == 7 || position == 8){
+		    sevensToRaise = "56";
+		 } else if (position == 1){
+		    sevensToRaise = "456";
+		 }
+		 if (action == "raise" && sevensToRaise.indexOf(card1.charAt(0)) > -1){
+		    correct(action);
+		    return;
+		 } else if (action == "raise" && sevensToRaise.indexOf(card2.charAt(0)) > -1){
+		    correct(action);
+		    return;
+		 } else if (action == "fold" && sevensToRaise.indexOf(card1.charAt(0)) == -1 && sevensToRaise.indexOf(card2.charAt(0)) == -1){
+		    correct(action);
+		    return;
+		 } else{
+		    incorrect(action);
+		    return;
+         }
+      } else if (card1.charAt(0) == "6" || card2.charAt(0) == "6"){ //SIXES
+         var sixesToRaise = " ";
+         if (position == 6 || position == 7){
+		    sixesToRaise = "5";
+		 } else if (position == 8){
+		    sixesToRaise = "45";
+		 } else if (position == 1){
+		    sixesToRaise = "345";
+		 }
+		 if (action == "raise" && sixesToRaise.indexOf(card1.charAt(0)) > -1){
+		    correct(action);
+		    return;
+		 } else if (action == "raise" && sixesToRaise.indexOf(card2.charAt(0)) > -1){
+		    correct(action);
+		    return;
+		 } else if (action == "fold" && sixesToRaise.indexOf(card1.charAt(0)) == -1 && sixesToRaise.indexOf(card2.charAt(0)) == -1){
+		    correct(action);
+		    return;
+		 } else{
+		    incorrect(action);
+		    return;
+         }
+      } else if (card1.charAt(0) == "5" || card2.charAt(0) == "5"){ //FIVES
+         var fivesToRaise = " ";
+         if (position == 6 || position == 7){
+		    fivesToRaise = "4";
+		 } else if (position == 8 || position == 1){
+		    fivesToRaise = "34";
+		 }
+		 if (action == "raise" && fivesToRaise.indexOf(card1.charAt(0)) > -1){
+		    correct(action);
+		    return;
+		 } else if (action == "raise" && fivesToRaise.indexOf(card2.charAt(0)) > -1){
+		    correct(action);
+		    return;
+		 } else if (action == "fold" && fivesToRaise.indexOf(card1.charAt(0)) == -1 && fivesToRaise.indexOf(card2.charAt(0)) == -1){
+		    correct(action);
+		    return;
+		 } else{
+		    incorrect(action);
+		    return;
+         }
+      } else if (card1.charAt(0) == "4" || card2.charAt(0) == "4"){ //FOURS
+         var foursToRaise = " ";
+		 if (position == 8 || position == 1){
+		    foursToRaise = "3";
+		 }
+		 if (action == "raise" && foursToRaise.indexOf(card1.charAt(0)) > -1){
+		    correct(action);
+		    return;
+		 } else if (action == "raise" && foursToRaise.indexOf(card2.charAt(0)) > -1){
+		    correct(action);
+		    return;
+		 } else if (action == "fold" && foursToRaise.indexOf(card1.charAt(0)) == -1 && foursToRaise.indexOf(card2.charAt(0)) == -1){
+		    correct(action);
+		    return;
+		 } else{
+		    incorrect(action);
+		    return;
+         }
+      }
+   }
+
+   //OFF-SUITEDS
+   if (card1.charAt(1) != card2.charAt(1)){
+      //ACES
+	  if (card1.charAt(0) == "A" || card2.charAt(0) == "A"){
+	     var acesOffToRaise = "QK";
+	     if (position == 4 || position == 5){
+	        acesOffToRaise = "JQK";
+	     } else if (position == 6 || position == 7){
+	        acesOffToRaise = "TJQK";
+	     } else if (position == 8){
+	        acesOffToRaise = "456789TJQK";
+	     } else if (position == 1){
+	        acesOffToRaise = "23456789TJQK";
+	     }
+	     if (action == "raise" && acesOffToRaise.indexOf(card1.charAt(0)) > -1){
+	  	    correct(action);
+	  	    return;
+	  	 } else if (action == "raise" && acesOffToRaise.indexOf(card2.charAt(0)) > -1){
+	  	    correct(action);
+	  		return;
+	  	 } else if (action == "fold" && acesOffToRaise.indexOf(card1.charAt(0)) == -1 && acesOffToRaise.indexOf(card2.charAt(0)) == -1){
+	  	    correct(action);
+	  	    return;
+	  	 } else{
+	  	    incorrect(action);
+	  	    return;
+	     }
+      } else if (card1.charAt(0) == "K" || card2.charAt(0) == "K"){ //KINGS
+         var kingsOffToRaise = " ";
+         if (position == 5){
+		    kingsOffToRaise = "Q";
+		 } else if (position == 6){
+		    kingsOffToRaise = "JQ";
+         } else if (position == 7){
+		    kingsOffToRaise = "TJQ";
+         } else if (position == 8){
+		    kingsOffToRaise = "9TJQ";
+         } else if (position == 1){
+		    kingsOffToRaise = "89TJQ";
+         }
+         if (action == "raise" && kingsOffToRaise.indexOf(card1.charAt(0)) > -1){
+		    correct(action);
+		    return;
+		 } else if (action == "raise" && kingsOffToRaise.indexOf(card2.charAt(0)) > -1){
+		    correct(action);
+		    return;
+		 } else if (action == "fold" && kingsOffToRaise.indexOf(card1.charAt(0)) == -1 && kingsOffToRaise.indexOf(card2.charAt(0)) == -1){
+		    correct(action);
+		    return;
+		 } else{
+		    incorrect(action);
+		    return;
+	     }
+      } else if (card1.charAt(0) == "Q" || card2.charAt(0) == "Q"){ //QUEENS
+         var queensOffToRaise = " ";
+         if (position == 6){
+		    queensOffToRaise = "J";
+		 } else if (position == 7){
+		    queensOffToRaise = "TJ";
+		 } else if (position == 8){
+		    queensOffToRaise = "9TJ";
+		 } else if (position == 1){
+		    queensOffToRaise = "89TJ";
+         }
+         if (action == "raise" && queensOffToRaise.indexOf(card1.charAt(0)) > -1){
+		    correct(action);
+		    return;
+		 } else if (action == "raise" && queensOffToRaise.indexOf(card2.charAt(0)) > -1){
+		    correct(action);
+		    return;
+		 } else if (action == "fold" && queensOffToRaise.indexOf(card1.charAt(0)) == -1 && queensOffToRaise.indexOf(card2.charAt(0)) == -1){
+		    correct(action);
+		    return;
+		 } else{
+		    incorrect(action);
+		    return;
+	     }
+      } else if (card1.charAt(0) == "J" || card2.charAt(0) == "J"){ //JACKS
+         var jacksOffToRaise = " ";
+         if (position == 7){
+		 	jacksOffToRaise = "T";
+		 } else if (position == 8){
+		    jacksOffToRaise = "9T";
+		 } else if (position == 1){
+		    jacksOffToRaise = "89T";
+         }
+         if (action == "raise" && jacksOffToRaise.indexOf(card1.charAt(0)) > -1){
+		    correct(action);
+		    return;
+		 } else if (action == "raise" && jacksOffToRaise.indexOf(card2.charAt(0)) > -1){
+		    correct(action);
+		    return;
+		 } else if (action == "fold" && jacksOffToRaise.indexOf(card1.charAt(0)) == -1 && jacksOffToRaise.indexOf(card2.charAt(0)) == -1){
+		    correct(action);
+		    return;
+		 } else{
+		    incorrect(action);
+		    return;
+	     }
+      } else if (card1.charAt(0) == "T" || card2.charAt(0) == "T"){ //TENS
+         var tensOffToRaise = " ";
+         if (position == 8){
+		    tensOffToRaise = "9";
+		 } else if (position == 1){
+		    tensOffToRaise = "89";
+         }
+         if (action == "raise" && tensOffToRaise.indexOf(card1.charAt(0)) > -1){
+		    correct(action);
+		    return;
+		 } else if (action == "raise" && tensOffToRaise.indexOf(card2.charAt(0)) > -1){
+		    correct(action);
+		    return;
+		 } else if (action == "fold" && tensOffToRaise.indexOf(card1.charAt(0)) == -1 && tensOffToRaise.indexOf(card2.charAt(0)) == -1){
+		    correct(action);
+		    return;
+		 } else{
+		    incorrect(action);
+		    return;
+	     }
+      } else if (card1.charAt(0) == "9" || card2.charAt(0) == "9"){ //NINES
+         var ninesOffToRaise = " ";
+         if (position == 8 || position == 1){
+		    ninesOffToRaise = "8";
+		 }
+		 if (action == "raise" && ninesOffToRaise.indexOf(card1.charAt(0)) > -1){
+		    correct(action);
+		    return;
+		 } else if (action == "raise" && ninesOffToRaise.indexOf(card2.charAt(0)) > -1){
+		    correct(action);
+		    return;
+		 } else if (action == "fold" && ninesOffToRaise.indexOf(card1.charAt(0)) == -1 && ninesOffToRaise.indexOf(card2.charAt(0)) == -1){
+		    correct(action);
+		    return;
+		 } else{
+		    incorrect(action);
+		    return;
+	     }
+      }
+   }
+
+   if (action == "fold"){
+      correct(action);
+   } else{
+      incorrect(action);
+   }
+}
+
+function raise(){
+   checkAnswer("raise");
+   ChangePosition();
+   setRandomCard();
+}
+
+function fold(){
+   checkAnswer("fold");
+   ChangePosition();
+   setRandomCard();
+}
+</script>
+</body>
+</html>
